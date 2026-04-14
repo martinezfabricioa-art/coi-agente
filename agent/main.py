@@ -98,7 +98,18 @@ async def webhook_handler(request: Request):
 async def _procesar_webhook(request: Request):
     """Lógica central de procesamiento de mensajes entrantes."""
     try:
+        # Log del payload crudo para debugging
+        body_raw = await request.body()
+        logger.info(f"Payload recibido: {body_raw.decode('utf-8', errors='replace')[:500]}")
+
         # Parsear webhook — el proveedor normaliza el formato
+        from starlette.requests import Request as StarletteRequest
+        import json
+        # Recrear el request con el body ya leído
+        async def receive():
+            return {"type": "http.request", "body": body_raw}
+        request._receive = receive
+
         mensajes = await proveedor.parsear_webhook(request)
 
         for msg in mensajes:
