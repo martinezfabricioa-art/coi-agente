@@ -374,3 +374,4 @@ Construido con [Claude Code](https://claude.ai/claude-code) para builders de LAT
 ## Licencia
 
 MIT — Usa este proyecto como quieras, para lo que quieras.
+"# coi-agente" 
