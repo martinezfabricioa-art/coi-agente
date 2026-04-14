@@ -62,12 +62,26 @@ async def webhook_verificacion(request: Request):
     return {"status": "ok"}
 
 
+@app.post("/webhook/messages")
+async def webhook_messages_handler(request: Request):
+    """
+    Endpoint específico para mensajes de Whapi.cloud.
+    Whapi envía los mensajes a /webhook/messages (no a /webhook raíz).
+    """
+    return await _procesar_webhook(request)
+
+
 @app.post("/webhook")
 async def webhook_handler(request: Request):
     """
     Recibe mensajes de WhatsApp via el proveedor configurado.
     Procesa el mensaje, genera respuesta con Claude y la envía de vuelta.
     """
+    return await _procesar_webhook(request)
+
+
+async def _procesar_webhook(request: Request):
+    """Lógica central de procesamiento de mensajes entrantes."""
     try:
         # Parsear webhook — el proveedor normaliza el formato
         mensajes = await proveedor.parsear_webhook(request)
@@ -80,7 +94,6 @@ async def webhook_handler(request: Request):
             logger.info(f"Mensaje de {msg.telefono}: {msg.texto}")
 
             # Obtener historial ANTES de guardar el mensaje actual
-            # (brain.py agrega el mensaje actual, evitando duplicados)
             historial = await obtener_historial(msg.telefono)
 
             # Generar respuesta con Claude
