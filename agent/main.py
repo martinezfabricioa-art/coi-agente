@@ -64,11 +64,26 @@ async def webhook_verificacion(request: Request):
 
 @app.post("/webhook/messages")
 async def webhook_messages_handler(request: Request):
-    """
-    Endpoint específico para mensajes de Whapi.cloud.
-    Whapi envía los mensajes a /webhook/messages (no a /webhook raíz).
-    """
+    """Mensajes entrantes de Whapi.cloud (path estándar)."""
     return await _procesar_webhook(request)
+
+
+@app.post("/v1/webhook/messages")
+async def webhook_v1_messages_handler(request: Request):
+    """Mensajes entrantes de Whapi.cloud (path v1)."""
+    return await _procesar_webhook(request)
+
+
+@app.post("/v1/webhook/statuses")
+async def webhook_v1_statuses_handler(request: Request):
+    """Actualizaciones de estado de Whapi.cloud (leídos, entregados, etc.)."""
+    return {"status": "ok"}  # Solo confirmamos recepción, no procesamos
+
+
+@app.post("/webhook/statuses")
+async def webhook_statuses_handler(request: Request):
+    """Actualizaciones de estado de Whapi.cloud."""
+    return {"status": "ok"}
 
 
 @app.post("/webhook")
