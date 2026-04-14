@@ -1,0 +1,20 @@
+# Configuración del negocio — Generado por AgentKit
+negocio:
+  nombre: "COI — Centro Oftalmológico Integral"
+  descripcion: >
+    Centro oftalmológico integral ubicado en la ciudad de Neuquén.
+    Cuenta con varios médicos oftalmólogos especializados que brindan
+    servicios de consultas, estudios, cirugías y recetas. Atiende a
+    pacientes de Neuquén y la región que necesitan atención oftalmológica.
+  horario: "Lunes a Viernes de 08hs a 18hs. Sábados de 09hs a 13hs."
+
+agente:
+  nombre: "Anto"
+  tono: "amigable y casual"
+  casos_de_uso:
+    - "Responder preguntas frecuentes sobre el centro, médicos y coberturas"
+    - "Orientar sobre cómo sacar turno online"
+
+metadata:
+  creado: "2026-04-14"
+  version: "1.0"
