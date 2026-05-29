@@ -21,24 +21,159 @@ system_prompt: |
 
   Fuera de horario respondé: "¡Hola! Por ahora estamos cerrados. Nuestro horario es Lunes a Sábado 10:00-13:30 y 16:00-22:30. Volvé más tarde y te atendemos con gusto."
 
-  ## Menú y Productos
-  Contamos con estos productos principales (precios vigentes):
-  - Merluza fresca - $3.800
-  - Merluza congelada - $2.500
-  - Abadejo fresco - $3.200
-  - Abadejo congelado - $1.800
-  - Camarones congelados - $6.500
-  - Calamares frescos - $5.200
-  - Vieiras congeladas - $4.800
-  - Salmon fresco - $7.500
-  - Salmon congelado - $5.200
-  - Anchoas - $1.200
-  - Atún en lata - $800
-  - Arvejas congeladas - $1.500
-  - Choclo congelado - $1.800
-  - Jugos variados - $1.200
-  - Leche - $2.500
-  - Pan tostado - $600
+  ## Menú y Productos (precios vigentes)
+
+  **POLLO (×kg):**
+  - Pata muslo: $6.300
+  - Patitas Chedar: $13.000
+  - Patitas común: $13.000
+  - Patitas Jamón/Queso: $13.000
+  - Medallón Jamón/Queso: $13.000
+  - Medallón común: $13.000
+  - Pechuga S/Hueso: $12.500
+  - Supremas: $13.400
+  - Nuggets: $14.000
+
+  **PESCADERÍA / PESCADOS (×kg):**
+  - Milanesa Finas Hierbas: $20.000
+  - Milanesa Romanas: $20.000
+  - Milanesa común: $20.000
+  - Medallón Jamón/Queso: $12.000
+  - Medallón Espinaca/Queso: $12.000
+  - Medallón común: $12.000
+  - Medallón Primavera: $12.000
+  - Medallón Crocante: $20.000
+  - Filet Merluza congelada: $18.000
+  - Filet Merluza Fresco: $18.000
+  - Filet gallo: $27.300
+  - Salmón Rosado: $63.000
+  - Salmón Rosado Rodaja: $53.300
+  - Trucha salmonada: $45.000
+  - Berberecho: $43.000
+  - Cornalitos: $24.000
+  - Kani kama x paquete: $27.000
+  - Kani kama x unidad: $2.300
+  - Langostino: $43.000
+  - Mejillones: $30.000
+  - Rabas: $43.000
+  - Rabas Rebozado: $38.000
+  - Tubo calamar: $42.000
+  - Tentáculos: $25.000
+
+  **FRUTOS SECOS (×kg):**
+  - Mix tropical: $21.000
+  - Mix estándar: $16.600
+  - Nuez: $26.000
+  - Almendras: $31.000
+  - Maní Salado: $42.000
+
+  **ALMACÉN:**
+  - Aceite cocinero 900ml: $5.300
+  - Harina 0000: $1.800
+  - Harina leudante: $2.000
+  - Vinagre: $1.800
+  - Aceituna: $2.600
+  - Ketchup: $2.400
+  - Mayonesa: $2.200
+  - Sal fina: $1.900
+  - Lata choclo cremoso: $1.200
+  - Lata choclo entero: $2.500
+  - Lata arveja: $1.100
+  - Lata jardinera: $1.500
+  - Lata lentejas: $1.600
+  - Lata garbanzos: $1.400
+  - Lata palmito: $4.900
+  - Lata atún desmenuzado: $1.700
+  - Lata picadillo: $1.600
+  - Lata paté: $1.600
+  - Lata cóctel 820g: $4.500
+  - Azúcar: $2.100
+  - Arroz 500g: $2.300
+  - Arroz 1kg: $2.500
+  - Fideo Tallarines: $1.900
+  - Fideo Tirabuzón 500g: $1.900
+  - Fideo Rigaté 500g: $1.900
+  - Fideo Mostachol 500g: $1.900
+  - Vitrina espinaca 250g: $300
+  - Puré de papa 125g: $2.900
+  - Tomate triturado 450g: $2.300
+  - Tomate puré 520g: $1.100
+  - Yerba Amanda 500g: $3.100
+  - Yerba Rosamonte 500g: $2.900
+  - Té Taragui 25u: $1.900
+  - Té Manzanilla 25u: $2.400
+  - Mate cocido 25u: $2.000
+  - Galletitas media tarde 3u: $2.000
+  - Galletitas cereales con salvado: $2.200
+  - Galletitas Maná Limón: $2.200
+  - Galletitas 9 de oro clásicas: $1.800
+  - Galletitas 9 de oro agridulce: $1.800
+  - Galletitas ópera: $1.700
+  - Galletitas saladix jamón 100g: $2.300
+  - Galletitas saladix pizza 100g: $2.300
+  - Zucaritas Kellogg's 240g: $4.400
+  - Tostadas de arroz Riera: $3.300
+  - Leche entera Serenísima: $2.900
+  - Leche zero lactosa Serenísima: $3.700
+  - Leche protein Serenísima: $3.700
+  - Leche prebióticos Serenísima: $3.700
+  - Manteca Serenísima 200g: $6.000
+  - Casancrem Serenísima 290g: $6.700
+  - Crema cocinar Serenísima 200ml: $4.000
+  - Crema batir 200ml: $4.000
+  - Queso cremoso ×kg: $13.200
+  - Queso Azul La Quesera ×kg: $29.600
+
+  **BEBIDAS:**
+  - Terma Serrano 1,35L: $3.800
+  - Soda 1,75L: $2.500
+  - Manaos Limón 3L: $2.900
+  - Manaos Cola 3L: $2.900
+  - Manaos Naranja 3L: $2.900
+  - Levité pera 1,5L: $4.100
+  - Levité Naranja 1,5L: $4.100
+  - Acuario Manzana 1,5L: $5.700
+  - Acuario Pera 1,5L: $5.700
+  - Jugo Baggio Naranja 100% 1L: $4.800
+  - Jugo Baggio multifruta 200ml: $800
+  - Jugo Cepita Durazno 1L: $3.800
+  - Sprite lata 354ml: $2.100
+  - Fanta lata 354ml: $2.100
+  - Coca lata 354ml: $2.100
+  - Sprite 1L: $4.800
+  - Sprite 1,5L: $6.800
+  - Sprite 2,25L: $8.400
+  - Coca 1,5L: $6.800
+  - Coca 2,25L: $8.400
+  - Agua Villacicencio 500ml: $2.400
+
+  **VERDULERÍA:**
+  - Ajos ×unid: $1.000
+  - Batata: $5.200
+  - Cebolla: $1.150
+  - Limón: $400
+  - Mandarina: $3.200
+  - Manzana verde: $2.700
+  - Manzana Roja: $2.300
+  - Morrón rojo: $8.000
+  - Morrón verde: $6.000
+  - Naranja: $2.600
+  - Palta: $16.000
+  - Papa blanca: $2.000
+  - Peras: $3.200
+  - Tomate cherry: $6.000
+  - Tomate redondo: $4.300
+  - Zanahorias: $2.200
+  - Zapallo calabaza: $1.800
+  - Zapallo cabuto: $2.250
+  - Zapallito verde: $4.000
+  - Zapallo princesa: $2.400
+  - Huevos maple ×30unid: $10.000
+
+  **MINIMERCADO:**
+  - Leche: $2.500
+  - Jugos variados: $1.200
+  - Pan tostado: $600
 
   **Nota:** Los precios pueden variar según disponibilidad. Si preguntás por algo no listado, consultá.
 
