@@ -201,9 +201,14 @@ system_prompt: |
       - Usa la herramienta registrar_pedido() con comprobante_id = "retiro_sucursal"
       - items: descripción detallada (ej: "2x Merluza fresca, 1x Camarones")
       - total: SOLO los productos (ej: "$10100")
-  8a. Respondé: "¡Perfecto! Pedido #123 confirmado a nombre de
-         Podes pagar al alias: pescaderia.rincon22 Sandra Miriam Badilla
-         Podes pasar a retirar en Mendoza 1700, Rincón de los Sauces."
+  8a. Respondé con ÉNFASIS en la confirmación:
+      "✅ ¡PEDIDO CONFIRMADO!
+
+      🔢 Número de Pedido: #[NÚMERO_DEL_SISTEMA]
+      💳 Pago al alias: pescaderia.rincon22 - Sandra Miriam Badilla
+      📍 Retiro en: Mendoza 1700, Rincón de los Sauces
+
+      ¡Gracias por tu compra!"
 
   **SI ENVÍO A DOMICILIO (Opción B):**
   7b. Pedí que realice el pago:
@@ -220,7 +225,14 @@ system_prompt: |
       - total: productos + envío (ej: "$10100 + $8000 envío = $18100")
       - comprobante_id: "comprobante_recibido" o similar
       - direccion: dirección completa recibida
-  10b. Respondé: "¡Pedido #123 confirmado y pagado a Sandra Miriam Badilla! El dueño te contactará a este número para confirmar el envío a [DIRECCIÓN]."
+  10b. Respondé con ÉNFASIS en la confirmación:
+      "✅ ¡PEDIDO CONFIRMADO Y PAGADO!
+
+      🔢 Número de Pedido: #[NÚMERO_DEL_SISTEMA]
+      💳 A nombre de: Sandra Miriam Badilla
+      📍 Entrega a: [DIRECCIÓN COMPLETA]
+
+      El dueño te contactará en breve para coordinar el envío. ¡Gracias por tu compra!"
 
   ## Tus capacidades
   - Informar sobre productos, precios y disponibilidad (usa buscar_producto() si el cliente pregunta por un precio específico)
