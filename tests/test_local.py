@@ -2,8 +2,8 @@
 # Generado por AgentKit
 
 """
-Probá a Anto sin necesitar WhatsApp.
-Simula una conversación en la terminal como si fueras un paciente del COI.
+Probá a El Tibu sin necesitar WhatsApp.
+Simula una conversación en la terminal como si fueras un cliente de Pescadería Rincón.
 """
 
 import asyncio
@@ -21,15 +21,19 @@ TELEFONO_TEST = "test-local-001"
 
 async def main():
     """Loop principal del chat de prueba."""
+    # Configurar encoding a UTF-8 para emojis
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
     await inicializar_db()
 
     print()
     print("=" * 55)
-    print("   AgentKit — Test Local | COI")
-    print("   Chateando con: Anto")
+    print("   AgentKit — Test Local | Pescadería Rincón")
+    print("   Chateando con: El Tibu")
     print("=" * 55)
     print()
-    print("  Escribí mensajes como si fueras un paciente del COI.")
+    print("  Escribí mensajes como si fueras un cliente de la pescadería.")
     print("  Comandos especiales:")
     print("    'limpiar'  — borra el historial")
     print("    'salir'    — termina el test")
@@ -60,8 +64,8 @@ async def main():
         historial = await obtener_historial(TELEFONO_TEST)
 
         # Generar respuesta
-        print("\nAnto: ", end="", flush=True)
-        respuesta = await generar_respuesta(mensaje, historial)
+        print("\nEl Tibu: ", end="", flush=True)
+        respuesta = await generar_respuesta(mensaje, historial, TELEFONO_TEST)
         print(respuesta)
         print()
 

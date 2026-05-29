@@ -41,7 +41,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="AgentKit — COI WhatsApp AI Agent",
+    title="AgentKit — Pescadería Rincón WhatsApp Agent",
     version="1.0.0",
     lifespan=lifespan
 )
@@ -50,7 +50,7 @@ app = FastAPI(
 @app.get("/")
 async def health_check():
     """Endpoint de salud para Railway/monitoreo."""
-    return {"status": "ok", "service": "agentkit-coi", "agente": "Anto"}
+    return {"status": "ok", "service": "agentkit-rincon", "agente": "El Tibu"}
 
 
 @app.get("/webhook")
@@ -123,7 +123,7 @@ async def _procesar_webhook(request: Request):
             historial = await obtener_historial(msg.telefono)
 
             # Generar respuesta con Claude
-            respuesta = await generar_respuesta(msg.texto, historial)
+            respuesta = await generar_respuesta(msg.texto, historial, msg.telefono)
 
             # Guardar mensaje del usuario Y respuesta del agente en memoria
             await guardar_mensaje(msg.telefono, "user", msg.texto)

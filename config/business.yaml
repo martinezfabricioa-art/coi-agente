@@ -1,20 +1,25 @@
-# Configuración del negocio — Generado por AgentKit
+# Configuración del negocio — Pescadería Rincón
 negocio:
-  nombre: "COI — Centro Oftalmológico Integral"
+  nombre: "Pescadería Rincón"
   descripcion: >
-    Centro oftalmológico integral ubicado en la ciudad de Neuquén.
-    Cuenta con varios médicos oftalmólogos especializados que brindan
-    servicios de consultas, estudios, cirugías y recetas. Atiende a
-    pacientes de Neuquén y la región que necesitan atención oftalmológica.
-  horario: "Lunes a Viernes de 08hs a 18hs. Sábados de 09hs a 13hs."
+    Pescadería + Minimercado ubicada en Mendoza 1700, Rincón de los Sauces, Neuquén.
+    Ofrecemos productos frescos del mar, opciones congeladas, y artículos de minimercado.
+    Atendemos de lunes a sábado con dos horarios de atención.
+  horario: "Lunes a Sábado: 10:00-13:30 y 16:00-22:30"
+  ubicacion: "Mendoza 1700, Rincón de los Sauces, Neuquén"
 
 agente:
-  nombre: "Anto"
-  tono: "amigable y casual"
+  nombre: "El Tibu"
+  tono: "amigable"
   casos_de_uso:
-    - "Responder preguntas frecuentes sobre el centro, médicos y coberturas"
-    - "Orientar sobre cómo sacar turno online"
+    - "Informar sobre productos y precios"
+    - "Tomar pedidos de clientes"
+    - "Informar sobre opciones de envío (domicilio o retiro en sucursal)"
+
+opciones_entrega:
+  domicilio: "$8.000"
+  retiro: "Sin costo en sucursal"
 
 metadata:
-  creado: "2026-04-14"
+  creado: "2026-05-22"
   version: "1.0"

@@ -99,3 +99,54 @@ async def limpiar_historial(telefono: str):
         for msg in mensajes:
             await session.delete(msg)
         await session.commit()
+
+
+class Pedido(Base):
+    """Modelo de pedido en la base de datos."""
+    __tablename__ = "pedidos"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    telefono: Mapped[str] = mapped_column(String(50), index=True)
+    items: Mapped[str] = mapped_column(Text)
+    total: Mapped[str] = mapped_column(String(100))
+    comprobante_id: Mapped[str] = mapped_column(String(255), nullable=True)  # ID de imagen del comprobante
+    estado: Mapped[str] = mapped_column(String(20), default="pendiente_pago")  # pendiente_pago → pagado → completado
+    timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+
+async def guardar_pedido(telefono: str, items: str, total: str) -> int:
+    """Inserta un pedido y retorna su ID."""
+    async with async_session() as session:
+        pedido = Pedido(
+            telefono=telefono,
+            items=items,
+            total=total,
+            estado="pendiente",
+            timestamp=datetime.utcnow()
+        )
+        session.add(pedido)
+        await session.commit()
+        return pedido.id
+
+
+async def obtener_pedidos(telefono: str) -> list[dict]:
+    """Retorna todos los pedidos de un número de teléfono."""
+    async with async_session() as session:
+        query = (
+            select(Pedido)
+            .where(Pedido.telefono == telefono)
+            .order_by(Pedido.timestamp.desc())
+        )
+        result = await session.execute(query)
+        pedidos = result.scalars().all()
+
+        return [
+            {
+                "id": p.id,
+                "items": p.items,
+                "total": p.total,
+                "estado": p.estado,
+                "timestamp": p.timestamp.isoformat()
+            }
+            for p in pedidos
+        ]

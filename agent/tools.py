@@ -1,15 +1,16 @@
-# agent/tools.py — Herramientas del agente COI
+# agent/tools.py — Herramientas del agente Pescadería Rincón
 # Generado por AgentKit
 
 """
-Herramientas específicas para el COI — Centro Oftalmológico Integral.
-Casos de uso: FAQ y orientación para sacar turnos.
+Herramientas específicas para Pescadería Rincón.
+Casos de uso: Menú de productos, toma de pedidos, notificación al dueño.
 """
 
 import os
 import yaml
 import logging
 from datetime import datetime
+from agent.memory import guardar_pedido
 
 logger = logging.getLogger("agentkit")
 
@@ -25,26 +26,112 @@ def cargar_info_negocio() -> dict:
 
 
 def obtener_horario() -> dict:
-    """Retorna el horario de atención del COI y si está abierto ahora."""
+    """Retorna el horario de atención de Pescadería Rincón y si está abierto ahora."""
     info = cargar_info_negocio()
     ahora = datetime.now()
     dia_semana = ahora.weekday()  # 0=Lunes, 6=Domingo
     hora_actual = ahora.hour
 
     # Determinar si está abierto según el horario
-    if dia_semana < 5:  # Lunes a Viernes
-        esta_abierto = 8 <= hora_actual < 18
-    elif dia_semana == 5:  # Sábado
-        esta_abierto = 9 <= hora_actual < 13
+    # Lunes a Sábado: 10:00-13:30 y 16:00-22:30
+    if dia_semana < 6:  # Lunes a Sábado
+        esta_abierto = (10 <= hora_actual < 13) or (16 <= hora_actual < 22)
     else:  # Domingo
         esta_abierto = False
 
     return {
-        "horario": info.get("negocio", {}).get("horario", "Lunes a Viernes 08-18hs, Sábados 09-13hs"),
+        "horario": info.get("negocio", {}).get("horario", "Lunes a Sábado 10:00-13:30 y 16:00-22:30"),
         "esta_abierto": esta_abierto,
         "dia_actual": ahora.strftime("%A"),
         "hora_actual": ahora.strftime("%H:%M"),
     }
+
+
+async def buscar_producto(nombre_producto: str) -> dict:
+    """
+    Busca productos en knowledge/productos.txt y retorna todos los que coinciden.
+
+    Args:
+        nombre_producto: Nombre del producto a buscar
+
+    Returns:
+        Dict con lista de productos si encuentra, o mensaje de no disponible
+    """
+    try:
+        knowledge_file = "knowledge/productos.txt"
+        if not os.path.exists(knowledge_file):
+            return {"error": "Archivo de productos no encontrado"}
+
+        with open(knowledge_file, "r", encoding="utf-8") as f:
+            lineas = f.readlines()
+
+        # Buscar el producto en el contenido
+        producto_lower = nombre_producto.lower()
+        palabras_clave = producto_lower.split()  # Split por espacios: ["merluza", "fresca"]
+
+        productos_encontrados = []
+
+        # Primera pasada: buscar coincidencia exacta (todas las palabras clave)
+        for line in lineas:
+            line_lower = line.lower()
+            if "-$" in line:
+                # Si todas las palabras clave están en la línea
+                if all(palabra in line_lower for palabra in palabras_clave):
+                    try:
+                        partes = line.split("-$")
+                        if len(partes) >= 2:
+                            precio_str = partes[-1].strip()
+                            precio = "$" + precio_str
+                            nombre_extraido = partes[0].replace("_", "").strip()
+                            productos_encontrados.append({
+                                "nombre": nombre_extraido,
+                                "precio": precio
+                            })
+                    except:
+                        continue
+
+        # Si encontró coincidencias exactas, retornarlas
+        if productos_encontrados:
+            return {
+                "disponible": True,
+                "cantidad": len(productos_encontrados),
+                "productos": productos_encontrados
+            }
+
+        # Segunda pasada: buscar por palabra principal (primera palabra)
+        if palabras_clave:
+            palabra_principal = palabras_clave[0]
+            for line in lineas:
+                line_lower = line.lower()
+                if "-$" in line and palabra_principal in line_lower:
+                    try:
+                        partes = line.split("-$")
+                        if len(partes) >= 2:
+                            precio_str = partes[-1].strip()
+                            precio = "$" + precio_str
+                            nombre_extraido = partes[0].replace("_", "").strip()
+                            productos_encontrados.append({
+                                "nombre": nombre_extraido,
+                                "precio": precio
+                            })
+                    except:
+                        continue
+
+        if productos_encontrados:
+            return {
+                "disponible": True,
+                "cantidad": len(productos_encontrados),
+                "productos": productos_encontrados
+            }
+
+        return {
+            "disponible": False,
+            "producto": nombre_producto,
+            "mensaje": f"'{nombre_producto}' no está disponible en este momento"
+        }
+    except Exception as e:
+        logger.error(f"Error buscando producto: {e}")
+        return {"error": str(e)}
 
 
 def buscar_en_knowledge(consulta: str) -> str:
@@ -76,62 +163,86 @@ def buscar_en_knowledge(consulta: str) -> str:
     return "No encontré información específica sobre eso en mis archivos."
 
 
-def verificar_cobertura_obra_social(obra_social: str) -> dict:
+async def registrar_pedido(telefono: str, items: str, total: str, tipo_entrega: str = "retiro_sucursal", comprobante_id: str = None) -> dict:
     """
-    Verifica si una obra social es atendida en el COI
-    y qué médicos tienen restricciones con ella.
+    Registra un pedido en la BD y notifica al dueño vía WhatsApp.
+
+    Args:
+        telefono: Número de teléfono del cliente
+        items: Descripción de items (ej: "2x Merluza fresca, 1x Camarones")
+        total: Total del pedido (ej: "$5400")
+        tipo_entrega: "retiro_sucursal" o "envio_domicilio"
+        comprobante_id: ID de la imagen del comprobante de pago (obligatorio si es envío)
+
+    Returns:
+        Dict con pedido_id y estado
     """
-    obra_social_upper = obra_social.upper().strip()
+    try:
+        from agent.memory import Pedido, async_session
 
-    # Obras sociales que NO se atienden
-    no_atendidas = ["IPROS"]
+        # Determinar estado según tipo de entrega
+        if tipo_entrega == "retiro_sucursal":
+            estado = "confirmado_retiro"
+        elif comprobante_id:
+            estado = "pagado"
+        else:
+            estado = "pendiente_pago"
 
-    # Restricciones por médico
-    restricciones = {
-        "IOSE": [
-            "Dr. Morgillo Antonio (no atiende IOSE)",
-            "Dr. Aringoli Juan (no atiende IOSE)",
-            "Dra. Muller Lucrecia (no atiende IOSE)",
-        ],
-        "OSPERYHRA": [
-            "Dra. Muller Lucrecia (no atiende OSPERYHRA)",
-        ],
-        "SWISS MEDICAL": [
-            "Dra. Doro Jimena Paola (no trabaja con Swiss Medical)",
-        ],
-        "SCIS": [
-            "Dra. Doro Jimena Paola (no trabaja con SCIS)",
-        ],
-    }
+        async with async_session() as session:
+            pedido = Pedido(
+                telefono=telefono,
+                items=items,
+                total=total,
+                comprobante_id=comprobante_id or f"retiro_sucursal",
+                estado=estado,
+                timestamp=datetime.utcnow()
+            )
+            session.add(pedido)
+            await session.commit()
+            pedido_id = pedido.id
 
-    if obra_social_upper in no_atendidas:
-        return {
-            "atendida": False,
-            "mensaje": f"Lo siento, el COI no atiende la obra social {obra_social}.",
-        }
-
-    if obra_social_upper in restricciones:
-        medicos_con_restriccion = restricciones[obra_social_upper]
-        return {
-            "atendida": True,
-            "tiene_restricciones": True,
-            "mensaje": f"La obra social {obra_social} es atendida en el COI, pero con algunas restricciones:",
-            "restricciones": medicos_con_restriccion,
-        }
-
-    return {
-        "atendida": True,
-        "tiene_restricciones": False,
-        "mensaje": f"La obra social {obra_social} es atendida en el COI sin restricciones conocidas.",
-    }
+        await notificar_dueno(telefono, items, total, pedido_id, tipo_entrega, comprobante_id)
+        logger.info(f"Pedido #{pedido_id} ({tipo_entrega}) registrado para {telefono}")
+        return {"pedido_id": pedido_id, "tipo_entrega": tipo_entrega, "estado": estado}
+    except Exception as e:
+        logger.error(f"Error al registrar pedido: {e}")
+        return {"error": str(e), "estado": "fallo"}
 
 
-def obtener_pasos_para_turno() -> str:
-    """Retorna los pasos para sacar turno online."""
-    return (
-        "Para sacar turno en el COI seguí estos pasos:\n"
-        "1️⃣ Ingresá a http://coineuquen.com.ar/\n"
-        "2️⃣ Hacé clic en *REGISTRARSE* (si es la primera vez)\n"
-        "3️⃣ Ingresá con tu *USUARIO = DNI* y tu *CLAVE*\n"
-        "4️⃣ Buscá el turno con el profesional que querés y reservalo ✅"
-    )
+async def notificar_dueno(telefono_cliente: str, items: str, total: str, pedido_id: int, tipo_entrega: str = "retiro_sucursal", comprobante_id: str = None):
+    """
+    Envía una notificación al dueño del negocio con el resumen del pedido.
+    """
+    try:
+        from agent.providers import obtener_proveedor
+        proveedor = obtener_proveedor()
+        dueno_telefono = os.getenv("DUENO_TELEFONO")
+
+        if not dueno_telefono:
+            logger.warning("DUENO_TELEFONO no configurado — notificación no enviada")
+            return
+
+        # Determinar estado de pago y entrega
+        if tipo_entrega == "retiro_sucursal":
+            entrega_info = "RETIRO EN SUCURSAL (Mendoza 1700)"
+            pago_info = "Sin pago previo"
+        else:
+            entrega_info = "ENVIO A DOMICILIO ($8.000)"
+            pago_info = "PAGADO" if comprobante_id else "Pendiente de pago"
+
+        mensaje_dueno = (
+            f"Nuevo Pedido #{pedido_id}\n\n"
+            f"Cliente: {telefono_cliente}\n"
+            f"Items: {items}\n"
+            f"Total: {total}\n"
+            f"Entrega: {entrega_info}\n"
+            f"Pago: {pago_info}\n"
+        )
+
+        if tipo_entrega == "envio_domicilio" and comprobante_id:
+            mensaje_dueno += f"Comprobante: Recibido\n"
+
+        await proveedor.enviar_mensaje(dueno_telefono, mensaje_dueno)
+        logger.info(f"Notificación enviada al dueño para pedido #{pedido_id}")
+    except Exception as e:
+        logger.error(f"Error notificando al dueño: {e}")
