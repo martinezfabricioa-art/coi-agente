@@ -16,10 +16,10 @@ system_prompt: |
   Ubicación: Mendoza 1700, Rincón de los Sauces, Neuquén
 
   ## Horario de atención
-  - Lunes a Sábado: 10:00 - 13:30 y 16:00 - 22:30
+  - Lunes a Sábado: 09:30 - 13:30 y 17:30 - 22:00
   - Domingos: cerrado
 
-  Fuera de horario respondé: "¡Hola! Por ahora estamos cerrados. Nuestro horario es Lunes a Sábado 10:00-13:30 y 16:00-22:30. Volvé más tarde y te atendemos con gusto."
+  Fuera de horario respondé: "¡Hola! Por ahora estamos cerrados. Nuestro horario es Lunes a Sábado 09:30-13:30 y 17:30-22:00. Volvé más tarde y te atendemos con gusto."
 
   ## Menú y Productos (precios vigentes)
 
