@@ -246,3 +246,69 @@ async def notificar_dueno(telefono_cliente: str, items: str, total: str, pedido_
         logger.info(f"Notificación enviada al dueño para pedido #{pedido_id}")
     except Exception as e:
         logger.error(f"Error notificando al dueño: {e}")
+
+
+async def procesar_comando_admin(mensaje: str) -> dict:
+    """
+    Procesa comandos administrativos.
+    Formato: #admin [contraseña] [comando]
+
+    Comandos disponibles:
+    - sin stock [producto]
+    - agregar [producto] $[precio]
+    - modificar [producto] $[precio]
+    """
+    from agent.memory import agregar_producto_custom, marcar_sin_stock
+
+    partes = mensaje.split(maxsplit=2)
+
+    if len(partes) < 3:
+        return {"exito": False, "error": "Formato: #admin [contraseña] [comando]"}
+
+    comando_tag = partes[0]  # #admin
+    contrasena = partes[1]
+    resto = " ".join(partes[2:])
+
+    # Validar contraseña
+    PASSWORD = os.getenv("ADMIN_PASSWORD", "Tibu#2025")
+    if contrasena != PASSWORD:
+        logger.warning(f"Intento de acceso admin con contraseña incorrecta")
+        return {"exito": False, "error": "Contraseña incorrecta"}
+
+    # Procesar comando
+    try:
+        if resto.startswith("sin stock "):
+            producto = resto.replace("sin stock ", "").strip()
+            resultado = await marcar_sin_stock(producto)
+            return {"exito": True, "tipo": "sin_stock", "producto": producto, "mensaje": f"✅ {producto} marcado como sin stock"}
+
+        elif resto.startswith("agregar "):
+            parte = resto.replace("agregar ", "").strip()
+            if "$" not in parte:
+                return {"exito": False, "error": "Formato: agregar [producto] $[precio]"}
+
+            partes_agregar = parte.split("$")
+            nombre = partes_agregar[0].strip()
+            precio = "$" + partes_agregar[1].strip()
+
+            resultado = await agregar_producto_custom(nombre, precio)
+            return {"exito": True, "tipo": "agregar", "producto": nombre, "precio": precio, "mensaje": f"✅ {nombre} agregado a ${precio}"}
+
+        elif resto.startswith("modificar "):
+            parte = resto.replace("modificar ", "").strip()
+            if "$" not in parte:
+                return {"exito": False, "error": "Formato: modificar [producto] $[precio]"}
+
+            partes_mod = parte.split("$")
+            nombre = partes_mod[0].strip()
+            precio = "$" + partes_mod[1].strip()
+
+            resultado = await agregar_producto_custom(nombre, precio)
+            return {"exito": True, "tipo": "modificar", "producto": nombre, "precio": precio, "mensaje": f"✅ Precio de {nombre} modificado a ${precio}"}
+
+        else:
+            return {"exito": False, "error": "Comando no reconocido. Usa: sin stock, agregar, o modificar"}
+
+    except Exception as e:
+        logger.error(f"Error procesando comando admin: {e}")
+        return {"exito": False, "error": str(e)}

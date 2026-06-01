@@ -10,7 +10,7 @@ import os
 from datetime import datetime
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from sqlalchemy import String, Text, DateTime, select, Integer
+from sqlalchemy import String, Text, DateTime, select, Integer, Boolean
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -101,6 +101,26 @@ async def limpiar_historial(telefono: str):
         await session.commit()
 
 
+class ProductoCustom(Base):
+    """Modelo para productos agregados/modificados por admin."""
+    __tablename__ = "productos_custom"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    nombre: Mapped[str] = mapped_column(String(255), unique=True, index=True)
+    precio: Mapped[str] = mapped_column(String(50))
+    timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+
+class StockProducto(Base):
+    """Modelo para marcar productos sin stock."""
+    __tablename__ = "stock_productos"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    nombre: Mapped[str] = mapped_column(String(255), unique=True, index=True)
+    en_stock: Mapped[bool] = mapped_column(Boolean, default=True)
+    timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+
 class Pedido(Base):
     """Modelo de pedido en la base de datos."""
     __tablename__ = "pedidos"
@@ -150,3 +170,46 @@ async def obtener_pedidos(telefono: str) -> list[dict]:
             }
             for p in pedidos
         ]
+
+
+async def agregar_producto_custom(nombre: str, precio: str):
+    """Agrega o actualiza un producto personalizado."""
+    async with async_session() as session:
+        query = select(ProductoCustom).where(ProductoCustom.nombre == nombre.lower())
+        result = await session.execute(query)
+        producto = result.scalars().first()
+
+        if producto:
+            producto.precio = precio
+        else:
+            producto = ProductoCustom(nombre=nombre.lower(), precio=precio)
+            session.add(producto)
+
+        await session.commit()
+        return {"exito": True, "nombre": nombre, "precio": precio}
+
+
+async def marcar_sin_stock(nombre: str):
+    """Marca un producto como sin stock."""
+    async with async_session() as session:
+        query = select(StockProducto).where(StockProducto.nombre == nombre.lower())
+        result = await session.execute(query)
+        stock = result.scalars().first()
+
+        if stock:
+            stock.en_stock = False
+        else:
+            stock = StockProducto(nombre=nombre.lower(), en_stock=False)
+            session.add(stock)
+
+        await session.commit()
+        return {"exito": True, "producto": nombre, "estado": "sin stock"}
+
+
+async def obtener_productos_sin_stock() -> list[str]:
+    """Retorna lista de productos sin stock."""
+    async with async_session() as session:
+        query = select(StockProducto).where(StockProducto.en_stock == False)
+        result = await session.execute(query)
+        stocks = result.scalars().all()
+        return [s.nombre for s in stocks]

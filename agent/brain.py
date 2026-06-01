@@ -140,6 +140,15 @@ async def generar_respuesta(mensaje: str, historial: list[dict], telefono: str) 
     if not mensaje or len(mensaje.strip()) < 2:
         return obtener_mensaje_fallback()
 
+    # Detectar si es comando admin
+    if mensaje.strip().startswith("#admin "):
+        from agent.tools import procesar_comando_admin
+        resultado = await procesar_comando_admin(mensaje.strip())
+        if resultado["exito"]:
+            return resultado.get("mensaje", "✅ Comando ejecutado")
+        else:
+            return f"❌ {resultado.get('error', 'Error en comando')}"
+
     system_prompt = cargar_system_prompt()
 
     # Construir mensajes para la API
