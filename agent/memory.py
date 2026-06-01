@@ -206,6 +206,23 @@ async def marcar_sin_stock(nombre: str):
         return {"exito": True, "producto": nombre, "estado": "sin stock"}
 
 
+async def reactivar_producto(nombre: str):
+    """Marca un producto como con stock nuevamente."""
+    async with async_session() as session:
+        query = select(StockProducto).where(StockProducto.nombre == nombre.lower())
+        result = await session.execute(query)
+        stock = result.scalars().first()
+
+        if stock:
+            stock.en_stock = True
+        else:
+            stock = StockProducto(nombre=nombre.lower(), en_stock=True)
+            session.add(stock)
+
+        await session.commit()
+        return {"exito": True, "producto": nombre, "estado": "con stock"}
+
+
 async def obtener_productos_sin_stock() -> list[str]:
     """Retorna lista de productos sin stock."""
     async with async_session() as session:

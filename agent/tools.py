@@ -255,10 +255,11 @@ async def procesar_comando_admin(mensaje: str) -> dict:
 
     Comandos disponibles:
     - sin stock [producto]
+    - con stock [producto]
     - agregar [producto] $[precio]
     - modificar [producto] $[precio]
     """
-    from agent.memory import agregar_producto_custom, marcar_sin_stock
+    from agent.memory import agregar_producto_custom, marcar_sin_stock, reactivar_producto
 
     partes = mensaje.split(maxsplit=2)
 
@@ -281,6 +282,11 @@ async def procesar_comando_admin(mensaje: str) -> dict:
             producto = resto.replace("sin stock ", "").strip()
             resultado = await marcar_sin_stock(producto)
             return {"exito": True, "tipo": "sin_stock", "producto": producto, "mensaje": f"✅ {producto} marcado como sin stock"}
+
+        elif resto.startswith("con stock "):
+            producto = resto.replace("con stock ", "").strip()
+            resultado = await reactivar_producto(producto)
+            return {"exito": True, "tipo": "con_stock", "producto": producto, "mensaje": f"✅ {producto} reactivado como con stock"}
 
         elif resto.startswith("agregar "):
             parte = resto.replace("agregar ", "").strip()
@@ -307,7 +313,7 @@ async def procesar_comando_admin(mensaje: str) -> dict:
             return {"exito": True, "tipo": "modificar", "producto": nombre, "precio": precio, "mensaje": f"✅ Precio de {nombre} modificado a ${precio}"}
 
         else:
-            return {"exito": False, "error": "Comando no reconocido. Usa: sin stock, agregar, o modificar"}
+            return {"exito": False, "error": "Comando no reconocido. Usa: sin stock, con stock, agregar, o modificar"}
 
     except Exception as e:
         logger.error(f"Error procesando comando admin: {e}")
