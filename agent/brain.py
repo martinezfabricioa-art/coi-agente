@@ -171,7 +171,13 @@ async def generar_respuesta(mensaje: str, historial: list[dict], telefono: str) 
             model="claude-sonnet-4-6",
             max_tokens=1024,
             tools=TOOLS,
-            system=system_prompt,
+            system=[
+                {
+                    "type": "text",
+                    "text": system_prompt,
+                    "cache_control": {"type": "ephemeral"}
+                }
+            ],
             messages=mensajes
         )
 
@@ -238,7 +244,13 @@ async def generar_respuesta(mensaje: str, historial: list[dict], telefono: str) 
                     model="claude-sonnet-4-6",
                     max_tokens=1024,
                     tools=TOOLS,
-                    system=system_prompt,
+                    system=[
+                        {
+                            "type": "text",
+                            "text": system_prompt,
+                            "cache_control": {"type": "ephemeral"}
+                        }
+                    ],
                     messages=mensajes
                 )
 
