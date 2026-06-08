@@ -7,78 +7,78 @@ _ Pata muslo-$6300
 _ Patitas Chedar-$13000
 _ Patitas comun-$13000
 _ Patitas Jamón/Queso-$13000
-_ Medallon Jamón/Queso-$13000
-_ Medallon comun-$13000
+_ Medallón Pollo Jamón/Queso-$13000
+_ Medallón Pollo Común-$13000
 _ Pechuga S/Hueso-$12500
 _ Supremas-$13400
 _ Nuggets-$14000
 
 PESCADERIA / PESCADOS: ×kg
 
- _  Milanesa Finas Hierbas-$20000
- _  Milanesa Romanas-$20000
- _  Milanesa comun-$20000
- _  Medallon Jamón/Queso-$12000
- _  Medallon Espinaca/Queso-$12000
- _  Medallon comun-$12000
- _  Medallon Primavera-$12000
- _  Medallon Crocante-$20000
- _  Filet Merluza cong-$18000
- _  Filet Merluza Fresco-$18000
- _  Filet gallo-$27300
- _  Salmon Rosado-$63000
- _  Salmon Rosado Rodaja-$53300
- _  Trucha salmonada-$45000
- _  Berberecho-$43000
- _  Cornalitos-$24000
- _  Kani kama x paquete-$27000
- _  Kani kama x unid -$2300
- _  Langostino-$43000
- _  Mejillones-$30000
- _  Rabas-$43000
- _  Rabas Rebozado-$38000
- _  Tubo calamar-$42000
- _  Tentáculos-$25000
+- Milanesa Finas Hierbas: $20.000
+- Milanesa Romanas: $20.000
+- Milanesa Pescado Común: $20.000
+- Medallón Pescado Jamón/Queso: $12.000
+- Medallón Pescado Espinaca/Queso: $13.000
+- Medallón Pescado Común: $13.000
+- Medallón Pescado Primavera: $13.000
+- Medallón Pescado Crocante: $20.000
+- Filet Merluza Congelada: $18.000
+- Filet Merluza Fresco: $18.000
+- Filet Gallo: $27.300
+- Salmón Rosado: $63.000
+- Salmón Rosado Rodaja: $53.300
+- Trucha Salmonada: $45.000
+- Berberecho: $43.000
+- Cornalitos: $24.000
+- Kani Kama ×paquete: $27.000
+- Kani Kama ×unidad: $2.300
+- Langostino: $43.000
+- Mejillones: $30.000
+- Rabas: $43.000
+- Rabas Rebozado: $38.000
+- Tubo Calamar: $42.000
+- Tentáculos: $25.000
 
 FRUTOS SECOS: ×kg
-
- _  Mix tropical-$21000
- _  Mix estandar-$16600
- _  Nuez-$26000
- _  Almendras-$31000
- _  Mani Salado-$42000
+ 
+- Mix Tropical: $21.000
+- Mix Estándar: $16.600
+- Nuez: $26.000
+- Almendras: $31.000
+- Maní Salado: $42.000
  
  ALMACEN:
  
- _  Aceite cocinero x 900ml-$5300
- _  Harina 0000 -$1800
- _  Harina leudante-$2000
- _  Vinagre -$1800
- _  Aceituna desc -$2600
- _  Ketchup-$2400
- _  Mayonesa-$2200
- _  Sal fina-$1900
- _  Lata choclo crem-$1200
- _  Lata choclo ent-$2500
- _  Lata Arveja-$1100
- _  Lata Jardinera-$1500
- _  Lata Lentejas-$1600
- _  Lata Garbanzos-$1400
- _  Lata palmito-$4900
- _  Lata atún desmenuzado-$1700
- _  Lata picadillo-$1600
- _  Lata paté-$1600
- _  Lata Cóctel x 820g-$4500
- _  Azúcar-$2100
- _  Arroz x 500g-$2300
- _  Arroz x 1kg-$2500
- _  Fideo Tallarines-$1900
- _  Fideo Tirabuzón x 500g -$1900
- _  Fideo Rigate x 500g -$1900
- _  Fideo Mostachol x 500g-$1900
- _  Vitrina espinaca x 250g-$300
- _  Pure de papa x 125g-$2900
- _  Tomate triturado x 450g-$2300
+- Aceite Cocinero 900ml: $5.300
+- Harina 0000: $1.800
+- Harina Leudante: $2.000
+- Vinagre: $1.800
+- Aceituna: $2.600
+- Ketchup: $2.400
+- Mayonesa: $2.200
+- Sal Fina: $1.900
+- Lata Choclo Cremoso: $1.200
+- Lata Choclo Entero: $2.500
+- Lata Arveja: $1.100
+- Lata Jardinera: $1.500
+- Lata Lentejas: $1.600
+- Lata Garbanzos: $1.400
+- Lata Palmito: $4.900
+- Lata Atún Desmenuzado: $1.700
+- Lata Picadillo: $1.600
+- Lata Paté: $1.600
+- Lata Cóctel 820g: $4.500
+- Azúcar: $2.100
+- Arroz 500g: $2.300
+- Arroz 1kg: $2.500
+- Fideo Tallarines: $1.900
+- Fideo Tirabuzón 500g: $1.900
+- Fideo Rigaté 500g: $1.900
+- Fideo Mostachol 500g: $1.900
+- Vitrina Espinaca 250g: $300
+- Puré de Papa 125g: $2.900
+- Tomate Triturado 450g: $2.300
  _  Tomate pure x 520g-$1100
  _  Yerba Amanda x 500g-$3100
  _  Yerba Rosamonte x 500g-$2900
