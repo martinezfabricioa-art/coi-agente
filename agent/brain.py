@@ -82,8 +82,19 @@ def cargar_config_prompts() -> dict:
 def cargar_productos_desde_knowledge() -> str:
     """Lee productos desde knowledge/productos.txt y formatea para el prompt."""
     try:
-        knowledge_file = "knowledge/productos.txt"
-        if not os.path.exists(knowledge_file):
+        possible_paths = [
+            "knowledge/productos.txt",
+            "/app/knowledge/productos.txt",
+            os.path.join(os.path.dirname(os.path.dirname(__file__)), "knowledge", "productos.txt")
+        ]
+
+        knowledge_file = None
+        for path in possible_paths:
+            if os.path.exists(path):
+                knowledge_file = path
+                break
+
+        if not knowledge_file:
             return ""
 
         with open(knowledge_file, "r", encoding="utf-8") as f:
