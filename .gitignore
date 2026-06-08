@@ -12,9 +12,10 @@ __pycache__/
 .venv/
 venv/
 
-# Knowledge (archivos privados del negocio)
+# Knowledge (incluir productos.txt, excluir otros)
 knowledge/*
 !knowledge/.gitkeep
+!knowledge/productos.txt
 
 # Session state
 config/session.yaml

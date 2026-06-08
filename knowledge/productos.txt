@@ -1,0 +1,178 @@
+PRODUCTOS PESCADERÍA RINCÓN
+============================
+
+POLLO: ×kg
+
+_ Pata muslo-$6300
+_ Patitas Chedar-$13000
+_ Patitas comun-$13000
+_ Patitas Jamón/Queso-$13000
+_ Medallon Jamón/Queso-$13000
+_ Medallon comun-$13000
+_ Pechuga S/Hueso-$12500
+_ Supremas-$13400
+_ Nuggets-$14000
+
+PESCADERIA / PESCADOS: ×kg
+
+ _  Milanesa Finas Hierbas-$20000
+ _  Milanesa Romanas-$20000
+ _  Milanesa comun-$20000
+ _  Medallon Jamón/Queso-$12000
+ _  Medallon Espinaca/Queso-$12000
+ _  Medallon comun-$12000
+ _  Medallon Primavera-$12000
+ _  Medallon Crocante-$20000
+ _  Filet Merluza cong-$18000
+ _  Filet Merluza Fresco-$18000
+ _  Filet gallo-$27300
+ _  Salmon Rosado-$63000
+ _  Salmon Rosado Rodaja-$53300
+ _  Trucha salmonada-$45000
+ _  Berberecho-$43000
+ _  Cornalitos-$24000
+ _  Kani kama x paquete-$27000
+ _  Kani kama x unid -$2300
+ _  Langostino-$43000
+ _  Mejillones-$30000
+ _  Rabas-$43000
+ _  Rabas Rebozado-$38000
+ _  Tubo calamar-$42000
+ _  Tentáculos-$25000
+
+FRUTOS SECOS: ×kg
+
+ _  Mix tropical-$21000
+ _  Mix estandar-$16600
+ _  Nuez-$26000
+ _  Almendras-$31000
+ _  Mani Salado-$42000
+ 
+ ALMACEN:
+ 
+ _  Aceite cocinero x 900ml-$5300
+ _  Harina 0000 -$1800
+ _  Harina leudante-$2000
+ _  Vinagre -$1800
+ _  Aceituna desc -$2600
+ _  Ketchup-$2400
+ _  Mayonesa-$2200
+ _  Sal fina-$1900
+ _  Lata choclo crem-$1200
+ _  Lata choclo ent-$2500
+ _  Lata Arveja-$1100
+ _  Lata Jardinera-$1500
+ _  Lata Lentejas-$1600
+ _  Lata Garbanzos-$1400
+ _  Lata palmito-$4900
+ _  Lata atún desmenuzado-$1700
+ _  Lata picadillo-$1600
+ _  Lata paté-$1600
+ _  Lata Cóctel x 820g-$4500
+ _  Azúcar-$2100
+ _  Arroz x 500g-$2300
+ _  Arroz x 1kg-$2500
+ _  Fideo Tallarines-$1900
+ _  Fideo Tirabuzón x 500g -$1900
+ _  Fideo Rigate x 500g -$1900
+ _  Fideo Mostachol x 500g-$1900
+ _  Vitrina espinaca x 250g-$300
+ _  Pure de papa x 125g-$2900
+ _  Tomate triturado x 450g-$2300
+ _  Tomate pure x 520g-$1100
+ _  Yerba Amanda x 500g-$3100
+ _  Yerba Rosamonte x 500g-$2900
+ _  Te Taragui x 25u-$1900
+ _  Te Manzanilla x 25u-$2400
+ _  Mate cocido x 25u-$2000
+ _  Galletitas media tarde x 3u-$2000
+ _  Galletitas cereales con salvado-$2200
+ _  Galletitas Mana Limon-$2200
+ _  Galletitas 9 de oro clasicas-$1800
+ _  Galletitas 9 de oro agridulce-$1800
+ _  Galletitas opera-$1700
+ _  Galletitas saladix Jamon x 100g-$2300
+ _  Galletitas saladix pizza x100g-$2300
+ _  Zucaritas kelloggs x 240g-$4400
+ _  Tostadas de Arroz Riera-$3300
+ _  Leche entera serenisima-$2900
+ _  Leche zero lactosa serenisima-$3700
+ _  Leche protein serenisima-$3700
+ _  Leche prebioticos serenisima-$3700
+ _  Manteca serenisima x 200g-$6000
+ _  Casancrem serenisima x 290g-$6700
+ _  Crema cocinar serenisima x 200ml-$4000
+ _  Crema Batir x 200ml-$4000
+ _  Queso cremoso x kg-$13200
+ _  Queso Azul la quesera x kg-$29600
+
+BEBIDAS:
+ _  Terma Serrano x 1,35L-$3800
+ _  Soda x 1,75L-$2500
+ _  Manaos Limon x 3L-$2900
+ _  Manaos Cola x 3L-$2900
+ _  Manaos  Naranja x 3L-$2900
+ _  Levite pera x 1,5L-$4100
+ _  Levite Naranja x 1,5L-$4100
+ _  Acuario Manzana x 1,5L-$5700
+ _  Acuario Pera x 1,5L-$5700
+ _  Jugo Baggio Naranja 100% x1L-$4800
+ _  Jugo Baggio multifruta x200ml-$800
+ _  Jugo Cepita Durazno x 1L-$3800
+ _  Sprite lata x354ml-$2100
+ _  Fanta lata x354ml-$2100
+ _  Coca lata x354ml-$2100
+ _  Sprite x1L-$4800
+ _  Sprite x1,5L-$6800
+ _  Sprite x2,25L-$8400
+ _  Coca x 1,5L-$6800
+ _  Coca x 2,25L-$8400
+ _  Agua villacicencio x 500ml-$2400
+
+VERDULERIA:
+ _  Acelga-$..
+ _  Ajos x unid-$1000
+ _  Banana-$..
+ _  Batata-$5200
+ _  Cebolla-$1150
+ _  Cebolla verdeo-$..
+ _  Lechuga-$..
+ _  Limon-$400
+ _  Mandarina-$3200
+ _  Manzana verde-$2700
+ _  Manzana Roja-$2300
+ _  Morron rojo-$8000
+ _  Morron verde-$6000
+ _  Naranja-$2600
+ _  Palta-$16000
+ _  Papa blanca-$2000
+ _  Peras-$3200
+ _  Tomate cherry-$6000
+ _  Tomate redondo-$4300
+ _  Zanahorias-$2200
+ _  Zapallo calabaza-$1800
+ _  Zapallo cabuto-$2250
+ _  Zapallito verde-$4000
+ _  Zapallo princesa-$2400
+ _  Huevos maple x 30unid-$10000
+
+
+
+MINIMERCADO
+- Leche - $2.500
+- Jugos variados - $1.200
+- Pan tostado - $600
+
+OPCIONES DE ENTREGA
+- Envío a domicilio (Solo Rincon de los Sauces): $8.000
+- Retiro en sucursal: Sin costo (Mendoza 1700, Rincón de los Sauces)
+
+HORARIO
+Lunes a Sábado: 09:30 - 13:30 y 17:30 - 22:00
+Domingos: CERRADO
+
+
+Nota: Los precios pueden variar según disponibilidad. Consultá por productos especiales o en oferta.
+
+Alias: pescaderia.rincon22 (Sandra Miriam  Badilla 27-29356007-8)
+
