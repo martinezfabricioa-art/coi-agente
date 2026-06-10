@@ -47,9 +47,33 @@ def obtener_horario() -> dict:
     }
 
 
+def _normalizar_palabra(palabra: str) -> str:
+    """Normaliza una palabra removiendo sufijos variables (género/número)."""
+    if palabra.endswith("a"):
+        return palabra[:-1]  # fresca -> fresc, congelada -> congelad
+    return palabra
+
+
+def _coincide_parcial(línea_lower: str, palabras_clave: list[str]) -> bool:
+    """Verifica si todas las palabras clave coinciden (flexibilidad de género/número)."""
+    for palabra in palabras_clave:
+        # Si es un número, buscar exactamente
+        if palabra.isdigit() or palabra.startswith("2") or palabra.startswith("1"):
+            if palabra not in línea_lower:
+                return False
+        else:
+            # Para palabras: buscar el raíz normalizado
+            raiz = _normalizar_palabra(palabra)
+            # Buscar la palabra exacta O su raíz
+            if palabra not in línea_lower and raiz not in línea_lower:
+                return False
+    return True
+
+
 async def buscar_producto(nombre_producto: str) -> dict:
     """
     Busca productos en knowledge/productos.txt y retorna todos los que coinciden.
+    Verifica también si el producto fue marcado como sin stock en la BD.
 
     Args:
         nombre_producto: Nombre del producto a buscar
@@ -58,6 +82,11 @@ async def buscar_producto(nombre_producto: str) -> dict:
         Dict con lista de productos si encuentra, o mensaje de no disponible
     """
     try:
+        from agent.memory import obtener_productos_sin_stock
+
+        # Obtener lista de productos sin stock en la BD
+        sin_stock = await obtener_productos_sin_stock()
+
         # Probar múltiples rutas (local, Docker, etc)
         possible_paths = [
             "knowledge/productos.txt",
@@ -80,56 +109,34 @@ async def buscar_producto(nombre_producto: str) -> dict:
 
         # Buscar el producto en el contenido
         producto_lower = nombre_producto.lower()
-        palabras_clave = producto_lower.split()  # Split por espacios: ["merluza", "fresca"]
+        # Filtrar palabras de cantidad (2kg, 1kg, etc)
+        palabras_clave = [p for p in producto_lower.split() if not p.endswith("kg")]
 
         productos_encontrados = []
 
-        # Primera pasada: buscar coincidencia exacta (todas las palabras clave)
+        # Buscar: todas las palabras clave coinciden (con flexibilidad de género/número)
         for line in lineas:
             line_lower = line.lower()
-            if "-$" in line:
-                # Si todas las palabras clave están en la línea
-                if all(palabra in line_lower for palabra in palabras_clave):
-                    try:
-                        partes = line.split("-$")
-                        if len(partes) >= 2:
-                            precio_str = partes[-1].strip()
-                            precio = "$" + precio_str
-                            nombre_extraido = partes[0].replace("_", "").strip()
-                            productos_encontrados.append({
-                                "nombre": nombre_extraido,
-                                "precio": precio
-                            })
-                    except:
-                        continue
+            if "-$" in line and _coincide_parcial(line_lower, palabras_clave):
+                try:
+                    partes = line.split("-$")
+                    if len(partes) >= 2:
+                        precio_str = partes[-1].strip()
+                        precio = "$" + precio_str
+                        nombre_extraido = partes[0].replace("_", "").strip()
 
-        # Si encontró coincidencias exactas, retornarlas
-        if productos_encontrados:
-            return {
-                "disponible": True,
-                "cantidad": len(productos_encontrados),
-                "productos": productos_encontrados
-            }
+                        # Verificar si está marcado como sin stock en la BD
+                        if nombre_extraido.lower() in sin_stock:
+                            continue  # Saltar este producto
 
-        # Segunda pasada: buscar por palabra principal (primera palabra)
-        if palabras_clave:
-            palabra_principal = palabras_clave[0]
-            for line in lineas:
-                line_lower = line.lower()
-                if "-$" in line and palabra_principal in line_lower:
-                    try:
-                        partes = line.split("-$")
-                        if len(partes) >= 2:
-                            precio_str = partes[-1].strip()
-                            precio = "$" + precio_str
-                            nombre_extraido = partes[0].replace("_", "").strip()
-                            productos_encontrados.append({
-                                "nombre": nombre_extraido,
-                                "precio": precio
-                            })
-                    except:
-                        continue
+                        productos_encontrados.append({
+                            "nombre": nombre_extraido,
+                            "precio": precio
+                        })
+                except:
+                    continue
 
+        # Si encontró coincidencias, retornarlas
         if productos_encontrados:
             return {
                 "disponible": True,
