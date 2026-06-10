@@ -117,13 +117,20 @@ async def buscar_producto(nombre_producto: str) -> dict:
         # Buscar: todas las palabras clave coinciden (con flexibilidad de género/número)
         for line in lineas:
             line_lower = line.lower()
-            if "-$" in line and _coincide_parcial(line_lower, palabras_clave):
+            # Detectar líneas con precio (usa "-$" o ": $")
+            tiene_precio = "-$" in line or ": $" in line
+            if tiene_precio and _coincide_parcial(line_lower, palabras_clave):
                 try:
-                    partes = line.split("-$")
+                    # Parsear: soportar ambos formatos "-$" y ": $"
+                    if "-$" in line:
+                        partes = line.split("-$")
+                    else:
+                        partes = line.split(": $")
+
                     if len(partes) >= 2:
                         precio_str = partes[-1].strip()
                         precio = "$" + precio_str
-                        nombre_extraido = partes[0].replace("_", "").strip()
+                        nombre_extraido = partes[0].replace("_", "").replace("-", "").strip()
 
                         # Verificar si está marcado como sin stock en la BD
                         if nombre_extraido.lower() in sin_stock:
